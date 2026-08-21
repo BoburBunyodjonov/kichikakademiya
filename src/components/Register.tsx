@@ -168,6 +168,7 @@ const SchoolRegistrationForm: React.FC = () => {
     ];
 
     const age = [
+        "3-yosh",
         "4-yosh",
         "5-yosh",
         "6-yosh",
