@@ -29,6 +29,9 @@ import {
 
 import Logo from "../assets/logo-kichik-akademiya.png"
 
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+
 // Logo ranglari
 const NAVY = '#14356C';
 const NAVY_DARK = '#0E2650';
@@ -208,6 +211,9 @@ const SchoolRegistrationForm: React.FC = () => {
     };
 
     const sendToTelegram = async () => {
+        if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+            throw new Error('Telegram sozlamalari topilmadi: VITE_TELEGRAM_BOT_TOKEN va VITE_TELEGRAM_CHAT_ID ni .env faylida belgilang');
+        }
         const message = `🎓 YANGI RO'YXATDAN O'TISH
 
 👤 Ism: ${formData.name}
@@ -217,13 +223,13 @@ const SchoolRegistrationForm: React.FC = () => {
 
 📅 Vaqt: ${new Date().toLocaleString('uz-UZ')}`;
 
-        const response = await fetch('https://api.telegram.org/bot8611785686:AAEqYbdlYS1aU9DkcZGNj6U0-PN3uQJFCWo/sendMessage', {
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                chat_id: '-1004384208873',
+                chat_id: TELEGRAM_CHAT_ID,
                 text: message,
                 parse_mode: 'HTML'
             }),
