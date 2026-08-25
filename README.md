@@ -1,70 +1,39 @@
-# React + TypeScript + Vite
+# Kichik Akademiya — private kindergarten landing page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A single-page marketing site for a private kindergarten in Uzbekistan, built to do one job well:
+turn a visitor into an enrolment lead. Parents fill in a short form and the application is
+delivered straight to the school's Telegram chat, so staff can call back within minutes without
+any CRM or back office.
 
-Currently, two official plugins are available:
+**Live demo:** https://kichikakademiya.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Responsive one-page layout, Uzbek-language, mobile-first (most traffic arrives from Instagram
+  and Telegram on phones).
+- Enrolment form: parent name, district, child's age (3–6), phone number.
+- Client-side validation with an Uzbek phone mask (`+998 XX XXX-XXXX`) and inline error snackbars.
+- Submissions are posted to a Telegram chat via the Bot API — no backend, no database, zero
+  hosting cost.
+- Animated success state so the parent gets immediate confirmation.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| | |
+|---|---|
+| Framework | React 19 + TypeScript |
+| Build | Vite 7 |
+| UI | Material UI 7 + Emotion, Tailwind CSS 4 |
+| Lead delivery | Telegram Bot API |
+| Hosting | Vercel |
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Running locally
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+cp .env.example .env    # VITE_TELEGRAM_BOT_TOKEN, VITE_TELEGRAM_CHAT_ID
+npm run dev             # http://localhost:5173
+npm run build           # tsc -b && vite build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-# register
+The Telegram credentials are read from environment variables and are never committed.
