@@ -236,7 +236,7 @@ const SchoolRegistrationForm: React.FC = () => {
         });
 
         if (!response.ok) {
-            throw new Error('Telegram ga yuborishda xatolik');
+            throw new Error(`Telegram ga yuborishda xatolik: ${response.status} ${await response.text()}`);
         }
     };
 
@@ -261,7 +261,8 @@ const SchoolRegistrationForm: React.FC = () => {
                 phoneNumber: '',
             });
             setTimeout(() => setSuccess(false), 3000);
-        } catch {
+        } catch (err) {
+            console.error(err);
             setError('Ariza yuborishda xatolik yuz berdi. Qaytadan urinib ko\'ring.');
             setOpenSnackbar(true);
         } finally {
